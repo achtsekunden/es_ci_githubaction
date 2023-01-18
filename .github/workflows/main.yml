@@ -4,11 +4,8 @@ name: CI
 
 # Controls when the workflow will run
 on:
-  # Triggers the workflow on push or pull request events but only for the "main" branch
   push:
-    branches: [ "main" ]
-  pull_request:
-    branches: [ "main" ]
+    branches: [ main ]
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
@@ -20,17 +17,34 @@ jobs:
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
 
-    # Steps represent a sequence of tasks that will be executed as part of the job
-    steps:
-      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - uses: actions/checkout@v3
+ steps:
+   # ich  checke zuerst das Repository aus
 
-      # Runs a single command using the runners shell
-      - name: Run a one-line script
-        run: echo Hello, world!
+    - uses: actions/checkout@v2
 
-      # Runs a set of commands using the runners shell
-      - name: Run a multi-line script
-        run: |
-          echo Add other actions to build,
-          echo test, and deploy your project.
+    # ich richte die benötigte Umgebung ein.
+
+    - name: Use Node.js
+      uses: actions/setup-node@v2
+      with:
+        node-version: "14.x"
+
+    # Abhaengigkeiten
+
+    - name: Install dependencies
+      run: npm install
+
+    - name: Run test
+      run: npm test
+
+    - name: Install modules
+      run: yarn
+
+    # run eslint
+    - name: Run ESLint
+      run: eslint . --ext .js,.jsx,.ts,.tsx
+
+      # compress
+    - name: Brotli compress the html, css and js files in repository
+      id: brotli
+      uses: charlesworth/compress-action@1.0
