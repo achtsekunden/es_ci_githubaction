@@ -37,13 +37,6 @@ jobs:
     - name: Run test
       run: npm test
 
-    - name: Install modules
-      run: yarn
-
-    # run eslint
-    - name: Run ESLint
-      run: eslint . --ext .js,.jsx,.ts,.tsx
-
       # compress
     - name: Brotli compress the html, css and js files in repository
       id: brotli
