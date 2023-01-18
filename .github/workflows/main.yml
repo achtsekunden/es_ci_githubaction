@@ -18,26 +18,14 @@ jobs:
     runs-on: ubuntu-latest
 
  steps:
-   # ich  checke zuerst das Repository aus
-
     - uses: actions/checkout@v2
-
-    # ich richte die benötigte Umgebung ein.
-
     - name: Use Node.js
       uses: actions/setup-node@v2
       with:
         node-version: "14.x"
-
-    # Abhaengigkeiten
 
     - name: Install dependencies
       run: npm install
 
     - name: Run test
       run: npm test
-
-      # compress
-    - name: Brotli compress the html, css and js files in repository
-      id: brotli
-      uses: charlesworth/compress-action@1.0
